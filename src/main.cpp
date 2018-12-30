@@ -3,9 +3,12 @@
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 
-//needed for WifiManager
+// needed for WifiManager
 #include <ESPAsyncWebServer.h>
 #include <ESPAsyncWiFiManager.h>         //https://github.com/tzapu/WiFiManager
+
+// BT serial port
+#include "BluetoothSerial.h"
 
 #include "test.h"
 
@@ -16,10 +19,13 @@
 
 AsyncWebServer server(80);
 DNSServer dns;
+BluetoothSerial SerialBT;
 
 void setup() {
   // test
   pinMode(LED_BUILTIN, OUTPUT);
+
+  SerialBT.begin("QlockToo");
 
   AsyncWiFiManager wifiManager(&server,&dns);
   //reset saved settings
