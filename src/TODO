@@ -1,0 +1,9 @@
+QlockToo controller
+
+- Connect to wifi
+  - wifimanager (no wifi -> become an accesspoint yourself)
+- OTA (in both AP and client mode)
+- I2C
+  - QlockToo lib
+- NTP time
+- MQTT
