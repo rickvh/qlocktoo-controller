@@ -3,27 +3,47 @@
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 
+//needed for WifiManager
+#include <ESPAsyncWebServer.h>
+#include <ESPAsyncWiFiManager.h>         //https://github.com/tzapu/WiFiManager
+
 #include "test.h"
 
 #define LED_BUILTIN 2
 
-const char* ssid = "SKULLFORT";
-const char* password = "schattigebabyeendjes.jpg!";
+// const char* ssid = "SKULLFORT";
+// const char* password = "schattigebabyeendjes.jpg!";
+
+AsyncWebServer server(80);
+DNSServer dns;
 
 void setup() {
   // test
   pinMode(LED_BUILTIN, OUTPUT);
 
+  AsyncWiFiManager wifiManager(&server,&dns);
+  //reset saved settings
+  // wifiManager.resetSettings();
+  //set custom ip for portal
+  //wifiManager.setAPConfig(IPAddress(10,0,1,1), IPAddress(10,0,1,1), IPAddress(255,255,255,0));
+  //fetches ssid and pass from eeprom and tries to connect
+  //if it does not connect it starts an access point with the specified name
+  //here  "AutoConnectAP"
+  //and goes into a blocking loop awaiting configuration
+  wifiManager.autoConnect("QlockToo");
+
+
+
   // TODO: fixup
   Serial.begin(115200);
   Serial.println("Booting");
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-  while (WiFi.waitForConnectResult() != WL_CONNECTED) {
-    Serial.println("Connection Failed! Rebooting...");
-    delay(5000);
-    ESP.restart();
-  }
+  // WiFi.mode(WIFI_STA);
+  // WiFi.begin(ssid, password);
+  // while (WiFi.waitForConnectResult() != WL_CONNECTED) {
+    // Serial.println("Connection Failed! Rebooting...");
+    // delay(5000);
+    // ESP.restart();
+  // }
 
   // Port defaults to 3232
   // ArduinoOTA.setPort(3232);
@@ -36,7 +56,7 @@ void setup() {
 
   // Password can be set with it's md5 value as well
   // MD5(admin) = 21232f297a57a5a743894a0e4a801fc3
-  // ArduinoOTA.setPasswordHash("21232f297a57a5a743894a0e4a801fc3");
+  // ArduinoOTA.setPasswordHash("21232f297a57a5a743894a0e4a801fc3");f
 
   ArduinoOTA
     .onStart([]() {

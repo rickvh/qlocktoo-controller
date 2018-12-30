@@ -1,6 +1,6 @@
 {
     "terminal.integrated.env.linux": {
-        "PATH": "/home/vanhal/.platformio/penv/bin:/home/vanhal/.platformio/penv:/home/vanhal/google-cloud-sdk/bin:/home/vanhal/google-cloud-sdk/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/vanhal/bin:/home/vanhal/esp/xtensa-esp32-elf/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/vanhal/bin:/home/vanhal/esp/xtensa-esp32-elf/bin",
+        "PATH": "/home/vanhal/.platformio/penv/bin:/home/vanhal/.platformio/penv:/home/vanhal/google-cloud-sdk/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/vanhal/bin:/home/vanhal/esp/xtensa-esp32-elf/bin",
         "PLATFORMIO_CALLER": "vscode"
     }
 }
