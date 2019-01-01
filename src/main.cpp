@@ -1,68 +1,36 @@
 #include <WiFi.h>
-#include <ESPmDNS.h>
-#include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 
 // needed for WifiManager
 #include <ESPAsyncWebServer.h>
 #include <ESPAsyncWiFiManager.h>         //https://github.com/tzapu/WiFiManager
 
-// BT serial port
-#include "BluetoothSerial.h"
-
 #include "test.h"
+#include "bluetooth.h"
 
 #define LED_BUILTIN 2
 
-// const char* ssid = "SKULLFORT";
-// const char* password = "schattigebabyeendjes.jpg!";
-
 AsyncWebServer server(80);
 DNSServer dns;
-BluetoothSerial SerialBT;
+// SimpleBLE SerialBT;
 
 void setup() {
+  Serial.begin(115200);
+  Serial.println("Booting");
+
   // test
   pinMode(LED_BUILTIN, OUTPUT);
 
-  SerialBT.begin("QlockToo");
-
-  AsyncWiFiManager wifiManager(&server,&dns);
-  //reset saved settings
-  // wifiManager.resetSettings();
-  //set custom ip for portal
-  //wifiManager.setAPConfig(IPAddress(10,0,1,1), IPAddress(10,0,1,1), IPAddress(255,255,255,0));
-  //fetches ssid and pass from eeprom and tries to connect
-  //if it does not connect it starts an access point with the specified name
-  //here  "AutoConnectAP"
-  //and goes into a blocking loop awaiting configuration
-  wifiManager.autoConnect("QlockToo");
-
-
-
-  // TODO: fixup
-  Serial.begin(115200);
-  Serial.println("Booting");
-  // WiFi.mode(WIFI_STA);
-  // WiFi.begin(ssid, password);
-  // while (WiFi.waitForConnectResult() != WL_CONNECTED) {
-    // Serial.println("Connection Failed! Rebooting...");
-    // delay(5000);
-    // ESP.restart();
+  // if(!SerialBT.begin("QlockToo")){
+  //   Serial.println("An error occurred initializing Bluetooth");
   // }
 
-  // Port defaults to 3232
-  // ArduinoOTA.setPort(3232);
+  AsyncWiFiManager wifiManager(&server,&dns);
+  wifiManager.autoConnect("QlockToo");
 
-  // Hostname defaults to esp3232-[MAC]
-   ArduinoOTA.setHostname("QlockToo");
+  setupBT();
 
-  // No authentication by default
-  // ArduinoOTA.setPassword("admin");
-
-  // Password can be set with it's md5 value as well
-  // MD5(admin) = 21232f297a57a5a743894a0e4a801fc3
-  // ArduinoOTA.setPasswordHash("21232f297a57a5a743894a0e4a801fc3");f
+  ArduinoOTA.setHostname("QlockToo");
 
   ArduinoOTA
     .onStart([]() {
@@ -100,9 +68,11 @@ void setup() {
 void loop() {
   ArduinoOTA.handle();
 
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(500);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(500);
-  printIets("Ik doe ook andere dingen");
+  loopBT();
+
+  // digitalWrite(LED_BUILTIN, HIGH);
+  // delay(150);
+  // digitalWrite(LED_BUILTIN, LOW);
+  // delay(100);
+  // printIets("Ik doe ook andere dingen");
 }
